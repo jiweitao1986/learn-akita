@@ -1,16 +1,20 @@
 <div class="container-fluid">
   <h1>Login</h1>
-  <p>{{sessionQuery.loggedInUser$ | async}}</p>
+  <p>{{sessionQuery.currentUser$ | async}}</p>
+  <p>{{sessionQuery.isUserVisible$ | async}}</p>
   <p>
-    <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+    <button type="button" class="btn btn-primary mr-2" (click)="changeUser()">ChangeUser</button>
+    <button type="button" class="btn btn-primary mr-2" (click)="showUser()">ShowUser</button>
+    <button type="button" class="btn btn-primary" (click)="hideUser()">HideUser</button>
   </p>
 </div>
 
 
 <div class="container-fluid">
   <p>
-    <button type="button" class="btn btn-primary" (click)="load()">Load</button> &nbsp;
-    <button type="button" class="btn btn-primary" (click)="login()">Add</button>
+    <button type="button" class="btn btn-primary mr-2" (click)="load()">Load</button>
+    <button type="button" class="btn btn-primary mr-2" (click)="login()">Add</button>
+    <button type="button" class="btn btn-primary" (click)="changePagination()">Pagination</button>
   </p>
   <table class="table table-bordered">
     <thead>

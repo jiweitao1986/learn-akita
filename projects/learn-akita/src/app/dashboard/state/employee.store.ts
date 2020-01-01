@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Employee } from './employee.model';
-import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { EntityState, EntityStore, EntityUIStore, StoreConfig } from '@datorama/akita';
+import { EmployeeUI, Employee } from './employee.model';
 
 /**
  * 定义State
  * @summary
  * 1、EntityState和普通State的区别
  */
-export interface EmployeeState extends EntityState<Employee> {
-}
+interface EmployeeState extends EntityState<Employee> {}
 
-/**
- * 初始状态
- */
-function createInitialState() {
-}
+interface EmployeeUIState extends EntityState<EmployeeUI> {}
 
 /**
  * 定义Store
@@ -25,8 +20,15 @@ function createInitialState() {
 @StoreConfig({
   name: 'employees'
 })
-export class EmployeeStore extends EntityStore<EmployeeState, Employee> {
+class EmployeeStore extends EntityStore<EmployeeState, Employee> {
+
+  public ui: EntityUIStore<EmployeeUIState>;
+
   constructor() {
     super();
+    this.createUIStore();
   }
 }
+
+
+export { EmployeeState, EmployeeUIState, EmployeeStore };

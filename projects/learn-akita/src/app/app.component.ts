@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService, SessionQuery } from './login/state/index';
+import { SessionService, SessionQuery } from './login/state/index';
 import { EmployeeService, EmployeeQuery } from './dashboard/state/index';
 
 @Component({
@@ -11,20 +11,42 @@ export class AppComponent  {
   title = 'learn-akita';
 
   constructor(
-    public loginService: LoginService,
+    public sessionService: SessionService,
     public sessionQuery: SessionQuery,
     public employeeService: EmployeeService,
     public employeeQuery: EmployeeQuery
   ) {
     this.employeeQuery.selectAll().subscribe((employees: any) => {
-      console.log('Query....');
+      console.log('----------EmployQuery selectAll----------');
       console.log(employees);
+    });
+
+    this.employeeQuery.ui.selectAll().subscribe((state: any) => {
+      console.log('----------EmployQuery ui selectAll----------');
+      console.log(state);
     });
   }
 
-  login() {
-    this.loginService.login().subscribe();
+  // ----------------------------------------
+  // SessionStore
+  // ----------------------------------------
+
+  public changeUser() {
+    this.sessionService.changeUser().subscribe();
   }
+
+  showUser() {
+    this.sessionService.showUser();
+  }
+
+  hideUser() {
+    this.sessionService.hideUser();
+  }
+
+
+  // ----------------------------------------
+  // EmpStore
+  // ----------------------------------------
 
   load() {
     this.employeeService.getEmployees().subscribe((employees: any) => {
@@ -33,5 +55,9 @@ export class AppComponent  {
   }
 
   add() {
+  }
+
+  changePagination() {
+    this.employeeService.changePagination();
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Query, toBoolean } from '@datorama/akita';
-import { filter, map } from 'rxjs/operators';
+import { tap, filter, map } from 'rxjs/operators';
 import { SessionState, SessionStore } from './session.store';
 
 @Injectable({
@@ -8,31 +8,30 @@ import { SessionState, SessionStore } from './session.store';
 })
 export class SessionQuery extends Query<SessionState> {
 
-  /**
-   * 是否登录
-   */
-  public isLoggedIn$ = this.select(({ user }) => toBoolean(user));
+  public isUserVisible$ = this.select(({ ui }) => toBoolean(ui.isUserVisible));
 
-  /**
-   * 当前登录的用户
-   */
-  public loggedInUser$ = this.select().pipe(
-    filter(
-      ({ user }) => toBoolean(user)
-    ),
-    map(
-      ({ user: { firstName: f, lastName: l } }) => `${f} ${l}`
-    )
+  public currentUser$ = this.select().pipe(
+    tap((state: any) => {
+      console.log(state);
+    }),
+    filter(({ user }) => {
+      return toBoolean(user);
+    }),
+    map(({ user: { firstName: f, lastName: l } }) => {
+      return `${f} ${l}`;
+    })
   );
 
   constructor(protected store: SessionStore) {
     super(store);
   }
 
-  /**
-   * 是否登录
-   */
-  public isLoggedIn() {
-    return toBoolean(this.getValue().user);
-  }
+  // public isLoggedIn$ = this.select(({ user }) => toBoolean(user));
+ 
+  // /**
+  //  * 是否登录
+  //  */
+  // public isLoggedIn() {
+  //   return toBoolean(this.getValue().user);
+  // }
 }

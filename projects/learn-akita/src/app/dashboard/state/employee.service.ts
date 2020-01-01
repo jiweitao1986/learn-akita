@@ -18,12 +18,25 @@ export class EmployeeService {
     private employeeQuery: EmployeeQuery
   ) { }
 
-  getEmployees(): Observable<Array<Employee>> {
+  public getEmployees(): Observable<Array<Employee>> {
     return this.employeeDataService.getEmployees().pipe(
       tap((employees: Array<Employee>) => {
         this.employeeStore.set(employees);
       })
     );
+  }
+
+  public changePagination() {
+
+    // uiStore里存的也是一个数组。
+    // this.moviesStore.ui.update/upsert(id, entity => ({ isOpen: !entity.isOpen }));
+    const random = Math.round(Math.random() * 100);
+    this.employeeStore.ui.upsert(1, (entity: any) => {
+      console.log(entity);
+      return {
+        pageIndex: random, pageSize: random
+      };
+    });
   }
 
   // deleteEmployee(id: ID) {

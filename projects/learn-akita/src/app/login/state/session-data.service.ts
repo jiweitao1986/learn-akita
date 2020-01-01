@@ -11,7 +11,7 @@ import { User } from './session.model';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginDataService {
+class SessionDataService {
 
   constructor() { }
 
@@ -30,3 +30,6 @@ export class LoginDataService {
     );
   }
 }
+
+export { SessionDataService };
+

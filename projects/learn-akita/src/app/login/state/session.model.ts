@@ -1,7 +1,12 @@
+interface SessionUI {
+  isUserVisible: boolean;
+}
+
+
 interface User {
   firstName: string;
   lastName: string;
   token: string;
 }
 
-export { User };
+export { SessionUI, User };

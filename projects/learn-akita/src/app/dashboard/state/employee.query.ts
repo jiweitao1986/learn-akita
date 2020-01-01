@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { QueryEntity } from '@datorama/akita';
+import { QueryEntity, EntityUIQuery } from '@datorama/akita';
 import { Employee } from './employee.model';
-import { EmployeeState, EmployeeStore } from './employee.store';
+import { EmployeeState, EmployeeUIState, EmployeeStore } from './employee.store';
 
 @Injectable({
   providedIn: 'root'
 })
 class EmployeeQuery extends QueryEntity<EmployeeState, Employee> {
 
+  public ui: EntityUIQuery<EmployeeUIState>;
+
   constructor(protected store: EmployeeStore) {
     super(store);
-}
+    this.createUIQuery();
+  }
 
 }
 
